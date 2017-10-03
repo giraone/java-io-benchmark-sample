@@ -1,8 +1,8 @@
-# Benchmarking different Java IO techniques with JMH
+# Benchmarking different Java IO/NIO techniques with JMH
 
 This project shows
 
-- a benchmark of different Java IO techniques on a simple file copying task of a 1 MByte file
+- a benchmark of different Java IO/NIO techniques on a simple file copying task of a 1 MByte file
 - how to use [Java Microbenchmark Harness (JMH)](http://openjdk.java.net/projects/code-tools/jmh/) to do this
 
 ## Why?
@@ -12,8 +12,10 @@ This project shows
 ## What is tested?
 
 The test compares copying using ...
-- `InputStream`/`OutputStream` and a `byte[]` buffer
-- [java.io.BufferedOutputStream](https://docs.oracle.com/javase/8/docs/api/java/io/BufferedInputStream.html),
+- [java.io.InputStream](https://docs.oracle.com/javase/8/docs/api/java/io/InputStream.html),
+  [java.io.OutputStream](https://docs.oracle.com/javase/8/docs/api/java/io/OutputStream.html)
+  and a `byte[]` buffer
+- [java.io.BufferedInputStream](https://docs.oracle.com/javase/8/docs/api/java/io/BufferedInputStream.html),
   [java.io.BufferedOutputStream](https://docs.oracle.com/javase/8/docs/api/java/io/BufferedOutputStream.html)
   and a `byte[]` buffer
 - [java.nio.channels.FileChannel](https://docs.oracle.com/javase/8/docs/api/java/nio/channels/FileChannel.html) for input
@@ -26,10 +28,10 @@ The test compares copying using ...
 
 ## Code
 
-All Java IO code is in [IoUtil.java](src/main/java/com/giraone/samples/io/IoUtil.java).
+All Java IO code is located in [IoUtil.java](src/main/java/com/giraone/samples/io/IoUtil.java).
 
-The JMH benchmark is in [IoBenchmark.java](src/main/java/com/giraone/samples/io/IoBenchmark.java).
-With the default JMH iteration settings, the test may take more than 5 minutes, so feel free to decrease the iterations
+The JMH benchmark code and its annotations is in [IoBenchmark.java](src/main/java/com/giraone/samples/io/IoBenchmark.java).
+With the default JMH iteration settings, the test may take 10 to 20 minutes, so feel free to decrease the iterations
 or reduced the number of buffer sizes, which are tested.
 
 ## Results
@@ -77,16 +79,17 @@ These are the JMH settings, defined using annotations:
 @BenchmarkMode(Mode.AverageTime)
 // it ist enough to have this value in milliseconds
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-// use the same instance of this class for the whole benchmark (so it is OK to have the file paths as member variables)
+// use the same instance of this class for the whole benchmark, 
+// so it is OK to have some fix member variables
 @State(Scope.Benchmark)
 ```
 
 A *cool* feature is the usage of a parameter group:
 
 ```
-    // this shows, how we can perform four measure groups: 1 KByte, 4 KByte, 16 KByte, 64 KByte
-    @Param({"1024", "4096", "16384", "65536"})
-    public int bufferSize;
+// this shows, how we can perform four measure groups: 1 KByte, 4 KByte, 16 KByte, 64 KByte
+@Param({"1024", "4096", "16384", "65536"})
+public int bufferSize;
 ```
 
 ## Open issues
