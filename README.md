@@ -40,19 +40,31 @@ Here are the results from my notebook with Windows 8.1 x64, Intel i5, 1.80Ghz, a
 
 ### Benchmark with the different buffer sizes
 ```
-Benchmark                                             (bufferSize)  Mode  Cnt  Score   Error  Units
-IoBenchmark.copyFileUsingStreams                              4096  avgt   10  7.809 ± 0.188  ms/op
-IoBenchmark.copyFileUsingStreams                             16384  avgt   10  7.149 ± 0.382  ms/op
-IoBenchmark.copyFileUsingBufferedStreams                      4096  avgt   10  7.891 ± 0.632  ms/op
-IoBenchmark.copyFileUsingBufferedStreams                     16384  avgt   10  7.448 ± 0.470  ms/op
-IoBenchmark.copyFileUsingInChannelOutBufferedStream           4096  avgt   10  7.160 ± 0.255  ms/op
-IoBenchmark.copyFileUsingInChannelOutBufferedStream          16384  avgt   10  6.999 ± 0.306  ms/op
-IoBenchmark.copyFileUsingChannelWithDirectByteBuffer          4096  avgt   10  7.747 ± 0.373  ms/op
-IoBenchmark.copyFileUsingChannelWithDirectByteBuffer         16384  avgt   10  7.047 ± 0.582  ms/op
-IoBenchmark.copyFileUsingChannelTransferFrom                  4096  avgt   10  6.719 ± 0.313  ms/op
-IoBenchmark.copyFileUsingChannelTransferFrom                 16384  avgt   10  6.534 ± 0.360  ms/op
-IoBenchmark.copyFileUsingChannelTransferTo                    4096  avgt   10  6.470 ± 0.328  ms/op
-IoBenchmark.copyFileUsingChannelTransferTo                   16384  avgt   10  6.439 ± 0.394  ms/op
+Benchmark                                             (bufferSize)  Mode  Cnt   Score   Error  Units
+IoBenchmark.copyFileUsingStreams                              1024  avgt    5  11.320 ± 0.744  ms/op
+IoBenchmark.copyFileUsingStreams                              4096  avgt    5   6.258 ± 0.478  ms/op
+IoBenchmark.copyFileUsingStreams                             16384  avgt    5   5.469 ± 0.612  ms/op
+IoBenchmark.copyFileUsingStreams                             65536  avgt    5   5.118 ± 0.133  ms/op
+IoBenchmark.copyFileUsingBufferedStreams                      1024  avgt    5   5.993 ± 0.809  ms/op
+IoBenchmark.copyFileUsingBufferedStreams                      4096  avgt    5   5.881 ± 0.431  ms/op
+IoBenchmark.copyFileUsingBufferedStreams                     16384  avgt    5   5.721 ± 0.286  ms/op
+IoBenchmark.copyFileUsingBufferedStreams                     65536  avgt    5   5.333 ± 0.650  ms/op
+IoBenchmark.copyFileUsingInChannelOutBufferedStream           1024  avgt    5   5.599 ± 0.482  ms/op
+IoBenchmark.copyFileUsingInChannelOutBufferedStream           4096  avgt    5   5.528 ± 0.348  ms/op
+IoBenchmark.copyFileUsingInChannelOutBufferedStream          16384  avgt    5   5.396 ± 0.229  ms/op
+IoBenchmark.copyFileUsingInChannelOutBufferedStream          65536  avgt    5   5.132 ± 0.178  ms/op
+IoBenchmark.copyFileUsingChannelWithDirectByteBuffer          1024  avgt    5  11.026 ± 0.497  ms/op
+IoBenchmark.copyFileUsingChannelWithDirectByteBuffer          4096  avgt    5   6.112 ± 0.704  ms/op
+IoBenchmark.copyFileUsingChannelWithDirectByteBuffer         16384  avgt    5   5.401 ± 0.860  ms/op
+IoBenchmark.copyFileUsingChannelWithDirectByteBuffer         65536  avgt    5   5.194 ± 0.632  ms/op
+IoBenchmark.copyFileUsingChannelTransferFrom                  1024  avgt    5   5.270 ± 0.080  ms/op
+IoBenchmark.copyFileUsingChannelTransferFrom                  4096  avgt    5   5.361 ± 0.171  ms/op
+IoBenchmark.copyFileUsingChannelTransferFrom                 16384  avgt    5   5.256 ± 0.083  ms/op
+IoBenchmark.copyFileUsingChannelTransferFrom                 65536  avgt    5   5.272 ± 0.113  ms/op
+IoBenchmark.copyFileUsingChannelTransferTo                    1024  avgt    5   5.253 ± 0.281  ms/op
+IoBenchmark.copyFileUsingChannelTransferTo                    4096  avgt    5   5.285 ± 0.265  ms/op
+IoBenchmark.copyFileUsingChannelTransferTo                   16384  avgt    5   5.179 ± 0.396  ms/op
+IoBenchmark.copyFileUsingChannelTransferTo                   65536  avgt    5   5.275 ± 0.279  ms/op
 ```
 
 ## Build and run
