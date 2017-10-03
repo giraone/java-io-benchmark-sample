@@ -29,7 +29,8 @@ import java.util.concurrent.TimeUnit;
 @BenchmarkMode(Mode.AverageTime)
 // it ist enough to have this value in milliseconds
 @OutputTimeUnit(TimeUnit.MILLISECONDS)
-// use the same instance of this class for the whole benchmark (so it is OK to have the file paths as member variables)
+// use the same instance of this class for the whole benchmark, 
+// so it is OK to have some fix member variables
 @State(Scope.Benchmark)
 
 public class IoBenchmark {
@@ -76,7 +77,6 @@ public class IoBenchmark {
         long bytesCopied = IoUtil.copyFileUsingChannelTransferFrom(srcFile, targetFile);
         assert bytesCopied == fileSize;
     }
-
 
     @Benchmark
     public void copyFileUsingChannelTransferTo() throws IOException {
