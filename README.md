@@ -26,6 +26,13 @@ The test compares copying using ...
 - [java.nio.channels.FileChannel.transferFrom(ReadableByteChannel src, long position, long count)](https://docs.oracle.com/javase/8/docs/api/java/nio/channels/FileChannel.html#transferFrom-java.nio.channels.ReadableByteChannel-long-long-)
 - [java.nio.channels.FileChannel.transferTo(long position, long count, WritableByteChannel target)](https://docs.oracle.com/javase/8/docs/api/java/nio/channels/FileChannel.html#transferTo-long-long-java.nio.channels.WritableByteChannel-)
 
+## Build and run
+
+```
+mvn clean package
+java -jar target/benchmarks.jar
+```
+
 ## Code
 
 All Java IO code is located in [IoUtil.java](src/main/java/com/giraone/samples/io/IoUtil.java).
@@ -36,9 +43,9 @@ or reduced the number of buffer sizes, which are tested.
 
 ## Results
 
-Here are the results from my notebook with Windows 8.1 x64, Intel i5, 1.80Ghz, an IDE disc and Oracle Java 8
+The benchmarks are for different buffer sizes from 1 KByte to 64 KByte.
 
-### Benchmark with the different buffer sizes
+### Windows 8.1 x64, Intel i5, 1.80Ghz, an IDE disc and Oracle Java 8
 ```
 Benchmark                                             (bufferSize)  Mode  Cnt   Score   Error  Units
 IoBenchmark.copyFileUsingStreams                              1024  avgt    5  11.320 ± 0.744  ms/op
@@ -67,12 +74,38 @@ IoBenchmark.copyFileUsingChannelTransferTo                   16384  avgt    5   
 IoBenchmark.copyFileUsingChannelTransferTo                   65536  avgt    5   5.275 ± 0.279  ms/op
 ```
 
-## Build and run
+### AWS EC2 t2.micro, SLES 12 SP2 x64 and OpenJDK 1.8 (IcedTea 3.5.1)
 
 ```
-mvn clean package
-java -jar target/benchmarks.jar
+Benchmark                                             (bufferSize)  Mode  Cnt   Score   Error  Units
+IoBenchmark.copyFileUsingStreams                              1024  avgt    5  15.999 ± 0.051  ms/op
+IoBenchmark.copyFileUsingStreams                              4096  avgt    5  15.999 ± 0.077  ms/op
+IoBenchmark.copyFileUsingStreams                             16384  avgt    5  15.997 ± 0.035  ms/op
+IoBenchmark.copyFileUsingStreams                             65536  avgt    5  16.000 ± 0.009  ms/op
+IoBenchmark.copyFileUsingBufferedStreams                      1024  avgt    5  15.995 ± 0.074  ms/op
+IoBenchmark.copyFileUsingBufferedStreams                      4096  avgt    5  15.997 ± 0.059  ms/op
+IoBenchmark.copyFileUsingBufferedStreams                     16384  avgt    5  15.994 ± 0.046  ms/op
+IoBenchmark.copyFileUsingBufferedStreams                     65536  avgt    5  16.000 ± 0.051  ms/op
+IoBenchmark.copyFileUsingInChannelOutBufferedStream           1024  avgt    5  16.000 ± 0.009  ms/op
+IoBenchmark.copyFileUsingInChannelOutBufferedStream           4096  avgt    5  15.998 ± 0.053  ms/op
+IoBenchmark.copyFileUsingInChannelOutBufferedStream          16384  avgt    5  16.004 ± 0.058  ms/op
+IoBenchmark.copyFileUsingInChannelOutBufferedStream          65536  avgt    5  15.998 ± 0.045  ms/op
+IoBenchmark.copyFileUsingChannelWithDirectByteBuffer          1024  avgt    5  16.067 ± 0.572  ms/op
+IoBenchmark.copyFileUsingChannelWithDirectByteBuffer          4096  avgt    5  15.999 ± 0.085  ms/op
+IoBenchmark.copyFileUsingChannelWithDirectByteBuffer         16384  avgt    5  15.999 ± 0.059  ms/op
+IoBenchmark.copyFileUsingChannelWithDirectByteBuffer         65536  avgt    5  16.004 ± 0.073  ms/op
+IoBenchmark.copyFileUsingChannelTransferFrom                  1024  avgt    5  15.997 ± 0.063  ms/op
+IoBenchmark.copyFileUsingChannelTransferFrom                  4096  avgt    5  15.998 ± 0.065  ms/op
+IoBenchmark.copyFileUsingChannelTransferFrom                 16384  avgt    5  16.000 ± 0.066  ms/op
+IoBenchmark.copyFileUsingChannelTransferFrom                 65536  avgt    5  16.004 ± 0.053  ms/op
+IoBenchmark.copyFileUsingChannelTransferTo                    1024  avgt    5  15.994 ± 0.101  ms/op
+IoBenchmark.copyFileUsingChannelTransferTo                    4096  avgt    5  15.999 ± 0.156  ms/op
+IoBenchmark.copyFileUsingChannelTransferTo                   16384  avgt    5  16.238 ± 4.109  ms/op
+IoBenchmark.copyFileUsingChannelTransferTo                   65536  avgt    5  16.042 ± 0.400  ms/op
 ```
+
+As one can see, the results with OpenJDK 1.8 on the AWS EC2 Linux seem to be
+independent of the buffer size and the technique!
 
 ## JMH settings
 
