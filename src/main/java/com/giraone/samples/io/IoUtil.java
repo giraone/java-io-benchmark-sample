@@ -3,19 +3,23 @@ package com.giraone.samples.io;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 
 public class IoUtil {
 
-    private static Logger LOGGER = LogManager.getLogger();
+    private static final Logger LOGGER = LogManager.getLogger();
 
     public static long copyFileUsingStreams(File srcFile, File targetFile, int bufferSize) throws IOException {
 
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("copyFileUsingStreams " + srcFile + " -> " + targetFile + ", bufferSize=" + bufferSize);
+        LOGGER.debug("copyFileUsingStreams {} -> {}, bufferSize={}", srcFile, targetFile, bufferSize);
 
         long bytesCopied = 0L;
         byte[] buffer = new byte[bufferSize];
@@ -35,8 +39,7 @@ public class IoUtil {
 
     public static long copyFileUsingBufferedStreams(File srcFile, File targetFile, int bufferSize) throws IOException {
 
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("copyFileUsingBufferedStreams " + srcFile + " -> " + targetFile + ", bufferSize=" + bufferSize);
+        LOGGER.debug("copyFileUsingBufferedStreams {} -> {}, bufferSize={}", srcFile, targetFile, bufferSize);
 
         long bytesCopied = 0L;
         byte[] buffer = new byte[bufferSize];
@@ -56,8 +59,7 @@ public class IoUtil {
 
     public static long copyFileUsingChannelWithDirectByteBuffer(File srcFile, File targetFile, int bufferSize) throws IOException {
 
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("copyFileUsingChannelWithDirectByteBuffer " + srcFile + " -> " + targetFile + ", bufferSize=" + bufferSize);
+        LOGGER.debug("copyFileUsingChannelWithDirectByteBuffer {} -> {}, bufferSize={}", srcFile, targetFile, bufferSize);
 
         long bytesCopied = 0L;
         ByteBuffer byteBuffer = ByteBuffer.allocateDirect(bufferSize); // direct ByteBuffer for native I/O
@@ -81,8 +83,7 @@ public class IoUtil {
 
     public static long copyFileUsingInChannelOutBufferedStream(File srcFile, File targetFile, int bufferSize) throws IOException {
 
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("copyFileUsingInChannelOutBufferedStream " + srcFile + " -> " + targetFile + ", bufferSize=" + bufferSize);
+        LOGGER.debug("copyFileUsingInChannelOutBufferedStream {} -> {}, bufferSize={}", srcFile, targetFile, bufferSize);
 
         long bytesCopied = 0L;
         byte[] buffer = new byte[bufferSize];
@@ -106,8 +107,7 @@ public class IoUtil {
 
     public static long copyFileUsingChannelTransferFrom(File srcFile, File targetFile) throws IOException {
 
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("copyFileUsingChannelTransferFrom " + srcFile + " -> " + targetFile);
+        LOGGER.debug("copyFileUsingChannelTransferFrom {} -> {}", srcFile, targetFile);
 
         long bytesCopied;
         try (FileChannel inputChannel = new FileInputStream(srcFile).getChannel()) {
@@ -122,8 +122,7 @@ public class IoUtil {
 
     public static long copyFileUsingChannelTransferTo(File srcFile, File targetFile) throws IOException {
 
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("copyFileUsingChannelTransferTo " + srcFile + " -> " + targetFile);
+        LOGGER.debug("copyFileUsingChannelTransferTo {} -> {}", srcFile, targetFile);
 
         long bytesCopied;
         try (FileChannel inputChannel = new FileInputStream(srcFile).getChannel()) {

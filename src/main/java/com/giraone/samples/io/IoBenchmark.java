@@ -35,9 +35,9 @@ import java.util.concurrent.TimeUnit;
 
 public class IoBenchmark {
 
-    private File srcFile = new File("testfiles/input-1000KB.jpg");
-    private File targetFile = new File("testfiles/output-1000KB.jpg");
-    private long fileSize = srcFile.length();
+    private final File srcFile = new File("testfiles/input-1000KB.jpg");
+    private final File targetFile = new File("testfiles/output-1000KB.jpg");
+    private final long fileSize = srcFile.length();
 
     // this shows, how we can perform four measure groups: 1 KByte, 4 KByte, 16 KByte, 64 KByte
     @Param({"1024", "4096", "16384", "65536"})
